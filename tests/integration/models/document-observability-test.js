@@ -27,6 +27,20 @@ test('can observe document properties', function(assert) {
   assert.equal(this.$().text(), 'New York');
 });
 
+test('can observe isValid', function(assert) {
+  this.set('doc', this.document);
+
+  this.render(hbs`{{doc.isValid}}`);
+
+  assert.equal(this.$().text(), 'false');
+
+  this.document.set('phoneNumber', '1234567890');
+  this.document.set('address.streetAddress', '1234 Nowhere St.');
+  this.document.set('address.city', 'Hope');
+
+  assert.equal(this.$().text(), 'true');
+});
+
 test('can observe array based document properties', function(assert) {
   this.schema = new Schema(arrayBaseObjectFixture);
   this.document = this.schema.buildDocument();

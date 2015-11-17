@@ -44,7 +44,9 @@ class ValueProxy {
     }
 
     Ember.run(() => {
+      Ember.propertyWillChange(this._document, 'isValid');
       Ember.set(this._values, this._valuePath, newValue);
+      Ember.propertyDidChange(this._document, 'isValid');
     });
   }
 
@@ -168,6 +170,7 @@ export class ObjectDocument extends Document {
   }
 
   get isValid() {
+    debugger
     return checkValidity(this, this._values);
   }
 
